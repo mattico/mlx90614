@@ -22,7 +22,7 @@ enum Register {
     ID1 = 0x3D,
     ID2 = 0x3E,
     ID3 = 0x3F,
-    SLEEP = 0xFF,
+//   SLEEP = 0xFF,
 }
 
 #[derive(Copy, Clone, PartialEq)]
@@ -138,7 +138,7 @@ where
     }
 
     pub fn with_address(i2c: I2C, address: u8, delay: Delay) -> Result<Self, Error<I2CError>> {
-        Self::validate_address(address)?;
+        validate_address(address)?;
         Ok(Mlx90614 { i2c, address, delay })
     }
 
@@ -203,7 +203,7 @@ where
     }
 
     pub fn set_address(&mut self, address: u8) -> Result<(), Error<I2CError>> {
-        Self::validate_address(address)?;
+        validate_address(address)?;
 
         // We're only supposted to modify the lsbyte
         let mut address_value = self.i2c_read(Register::ADDRESS)?;        
@@ -269,15 +269,6 @@ where
 
         Ok(())
     }
-
-    /// Returns an error if the given address is not a valid I2C address.
-    fn validate_address(address: u8) -> Result<(), Error<I2CError>> {
-        if address > 0x80 || address == 0 {
-            Err(Error::InvalidAddress(address))
-        } else {
-            Ok(())
-        }
-    }
 }
 
 fn crc8(data: &[u8]) -> u8 {
@@ -294,4 +285,13 @@ fn crc8(data: &[u8]) -> u8 {
         }
     }
     crc
+}
+
+/// Returns an error if the given address is not a valid I2C address.
+fn validate_address<T>(address: u8) -> Result<(), Error<T>> {
+    if address > 0x80 || address == 0 {
+        Err(Error::InvalidAddress(address))
+    } else {
+        Ok(())
+    }
 }
