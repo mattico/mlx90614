@@ -1,0 +1,12 @@
+[package]
+name = "mlx90614"
+version = "0.1.0"
+authors = ["Matt Ickstadt <mattico8@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+embedded-hal = "0.2"
+
+[features]
+default = ["fmt"]
+fmt = []
