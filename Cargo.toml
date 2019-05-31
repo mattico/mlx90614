@@ -3,6 +3,9 @@ name = "mlx90614"
 version = "0.1.0"
 authors = ["Matt Ickstadt <mattico8@gmail.com>"]
 edition = "2018"
+license = "MIT"
+description = "MLX90614 driver for Rust embedded-hal"
+repository = "https://github.com/mattico/mlx90614"
 
 [dependencies]
 embedded-hal = "0.2"
