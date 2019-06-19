@@ -66,7 +66,7 @@ impl Temperature {
         match self {
             Temperature::Kelvin(v) => v,
             Temperature::Raw(v) => (v as f32) / 50.0,
-            Temperature::Celsius(v) => v - 273.15,
+            Temperature::Celsius(v) => v + 273.15,
             v @ Temperature::Farenheit(_) => v.as_celsius().into_kelvin(),
         }
     }
@@ -80,7 +80,7 @@ impl Temperature {
     pub fn into_celsius(self) -> f32 {
         match self {
             Temperature::Celsius(v) => v,
-            Temperature::Kelvin(v) => v + 273.15,
+            Temperature::Kelvin(v) => v - 273.15,
             Temperature::Farenheit(v) => (v - 32.0) * 5.0 / 9.0,
             v @ Temperature::Raw(_) => v.as_kelvin().into_celsius(),
         }
